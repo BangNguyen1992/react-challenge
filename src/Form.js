@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import AlertContainer from 'react-alert';
 
 import './Form.css';
 import './App.css';
@@ -12,18 +13,39 @@ class Form extends Component {
 			"userName": false,
 			"location": false,
 		};
+		this.alertOptions = {
+      offset: 14,
+      position: 'bottom left',
+      theme: 'dark',
+      time: 5000,
+      transition: 'scale'
+    };
 	}
+
 	inputChanged(name, e) {
 		e.preventDefault();
 		this.props.onChange(name, e.target.value);
 	}
+
+	showAlert(){
+    this.msg.show('Please fill in all field', {
+      time: 4000,
+      type: 'success',
+      icon: <img src="./info.png" atl="Error"></img>
+    });
+  }
 	onSubmit(e) {
 		e.preventDefault();
-		if ((this.props) === ""){
+
+		if (this.props.firstName ||
+				this.props.lastName ||
+				this.props.username ||
+				this.props.location === ""){
+			this.showAlert();
 
 		} else{
-
 			this.props.onSubmit();
+			console.log(this.props);
 		}
 	}
 	onValidate(key, value){
@@ -36,16 +58,18 @@ class Form extends Component {
 		return (
 
 			<div className="myForm">
+				<AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
 				<div className="myForm-title"><h1>SPORTSETTER</h1></div>
 				<div className="formContainer">
 
 					<form onSubmit={this.onSubmit.bind(this)}>
 						<h4>First Name</h4>
 						<input
+
 							type="text"
 							placeholder="First Name"
 							className="Form-text-input"
-							required value={this.props.firstName}
+							 value={this.props.firstName}
 							onChange={this.inputChanged.bind(this, "firstName")}
 							onBlur={this.props.handleBlur}
 							onFocus={()=> this.value.firstName = true}/>
@@ -57,7 +81,7 @@ class Form extends Component {
 							type="text"
 							placeholder="Last name"
 							className="Form-text-input"
-							required value={this.props.lastName}
+							 value={this.props.lastName}
 							onChange={this.inputChanged.bind(this, "lastName")}
 							onBlur={this.props.handleBlur}
 							onFocus={()=> this.value.lastName = true}/>
@@ -69,7 +93,7 @@ class Form extends Component {
 							type="text"
 							placeholder="Username"
 							className="Form-text-input"
-							required value={this.props.userName}
+							 value={this.props.userName}
 							onChange={this.inputChanged.bind(this, "userName")}
 							onBlur={this.props.handleBlur}
 							onFocus={()=> this.value.userName = true}/>
@@ -81,7 +105,7 @@ class Form extends Component {
 							type="text"
 							placeholder="Location"
 							className="Form-text-input"
-							required value={this.props.location}
+							 value={this.props.location}
 							onChange={this.inputChanged.bind(this, "location")}
 							onBlur={this.props.handleBlur}
 							onFocus={()=> this.value.location = true}/>

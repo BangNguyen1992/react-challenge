@@ -16,19 +16,25 @@ class App extends Component {
 			location: "",
 			validating: false,
 		};
+
 	}
+
 	onFieldChange(field, value) {
 		this.setState({ [field]: value });
 	}
+
 	onEditingComplete() {
 		this.setState({ editing: false });
 	}
+
 	onReEdit(){
 		this.setState({ editing: true });
 	}
+
 	handleBlur(){
 		this.setState({ validating: true });
 	}
+
 	render() {
 		let component;
 		if (this.state.editing) {
@@ -53,8 +59,10 @@ class App extends Component {
 		}
 		return (
 			<div className="App">
-				<ReactCSSTransitionReplace transitionName="cross-fade"
-                               transitionEnterTimeout={1000} transitionLeaveTimeout={1000}>
+				<ReactCSSTransitionReplace
+					transitionName="cross-fade"
+          transitionEnterTimeout={1000}
+					transitionLeaveTimeout={1000}>
 					{component}
 				</ReactCSSTransitionReplace>
 			</div>
