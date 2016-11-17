@@ -31,7 +31,7 @@ class Form extends Component {
     this.msg.show('Please fill in all field', {
       time: 4000,
       type: 'success',
-      icon: <img src="./info.png" atl="Error"></img>
+      icon: <img src="./info.png" alt="Error"></img>
     });
   }
 	onSubmit(e) {
