@@ -34,24 +34,24 @@ class Form extends Component {
       icon: <img src="./info.png" alt="Error"></img>
     });
   }
+
 	onSubmit(e) {
 		e.preventDefault();
-
-		if (this.props.firstName ||
-				this.props.lastName ||
-				this.props.username ||
-				this.props.location === ""){
+		if (!this.props.firstName ||
+				!this.props.lastName ||
+				!this.props.userName ||
+				!this.props.location ){
+			console.log(this.props);
 			this.showAlert();
-
-		} else{
+		} else {
 			this.props.onSubmit();
 			console.log(this.props);
 		}
 	}
+
 	onValidate(key, value){
 		return this.props.validating && value === "" && this.value[key] ? <span className="help-block">This field is required</span> : " ";
 	}
-
 
 	render() {
 
@@ -63,52 +63,57 @@ class Form extends Component {
 				<div className="formContainer">
 
 					<form onSubmit={this.onSubmit.bind(this)}>
+
+
+
+
+
 						<h4>First Name</h4>
 						<input
-
 							type="text"
 							placeholder="First Name"
 							className="Form-text-input"
-							 value={this.props.firstName}
+							value={this.props.firstName}
 							onChange={this.inputChanged.bind(this, "firstName")}
 							onBlur={this.props.handleBlur}
 							onFocus={()=> this.value.firstName = true}/>
-						{this.onValidate("firstName", this.props.firstName)}
 
+						{this.onValidate("firstName", this.props.firstName)}
 
 						<h4>Last Name</h4>
 						<input
 							type="text"
-							placeholder="Last name"
+							placeholder="Last Name"
 							className="Form-text-input"
-							 value={this.props.lastName}
+							value={this.props.lastName}
 							onChange={this.inputChanged.bind(this, "lastName")}
 							onBlur={this.props.handleBlur}
 							onFocus={()=> this.value.lastName = true}/>
-						{this.onValidate("lastName", this.props.lastName)}
 
+						{this.onValidate("lastName", this.props.lastName)}
 
 						<h4>Username</h4>
 						<input
 							type="text"
 							placeholder="Username"
 							className="Form-text-input"
-							 value={this.props.userName}
+							value={this.props.userName}
 							onChange={this.inputChanged.bind(this, "userName")}
 							onBlur={this.props.handleBlur}
 							onFocus={()=> this.value.userName = true}/>
-						{this.onValidate("userName", this.props.userName)}
 
+						{this.onValidate("userName", this.props.userName)}
 
 						<h4>Location</h4>
 						<input
 							type="text"
 							placeholder="Location"
 							className="Form-text-input"
-							 value={this.props.location}
+							value={this.props.location}
 							onChange={this.inputChanged.bind(this, "location")}
 							onBlur={this.props.handleBlur}
 							onFocus={()=> this.value.location = true}/>
+
 						{this.onValidate("location", this.props.location)}
 
 						<a><button className="mybtn" type="submit" value="Submit">Submit</button></a>
