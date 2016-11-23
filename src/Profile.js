@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react';
 import './Profile.css';
 import './Form.css';
 import './App.css';
+
 const Profile = (props) => {
 	return (
 		<div className="myForm">

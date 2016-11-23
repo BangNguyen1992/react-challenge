@@ -18,6 +18,8 @@ class App extends Component {
 		};
 
 	}
+	
+	
 
 	onFieldChange(field, value) {
 		this.setState({ [field]: value });
@@ -50,7 +52,7 @@ class App extends Component {
 					onSubmit={this.onEditingComplete.bind(this)} />;
 		} else {
 			component =
-				<Profile key="three"
+				<Profile key="two"
 					firstName={this.state.firstName}
 					lastName={this.state.lastName}
 					userName={this.state.userName}

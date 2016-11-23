@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import AlertContainer from 'react-alert';
+import FormInput from './FormInput'
 
 import './Form.css';
 import './App.css';
@@ -7,6 +8,7 @@ import './App.css';
 class Form extends Component {
 	constructor(props) {
 		super(props);
+
 		this.value = {
 			"firstName": false,
 			"lastName": false,
@@ -21,12 +23,7 @@ class Form extends Component {
       transition: 'scale'
     };
 	}
-
-	inputChanged(name, e) {
-		e.preventDefault();
-		this.props.onChange(name, e.target.value);
-	}
-
+	
 	showAlert(){
     this.msg.show('Please fill in all field', {
       time: 4000,
@@ -34,92 +31,86 @@ class Form extends Component {
       icon: <img src="./info.png" alt="Error"></img>
     });
   }
+	
+	handleFocus(i){
+		return this.value[i] = true;
+	}
 
 	onSubmit(e) {
 		e.preventDefault();
-		if (!this.props.firstName ||
+		if(!this.props.firstName.toString() ||
 				!this.props.lastName ||
 				!this.props.userName ||
 				!this.props.location ){
-			console.log(this.props);
 			this.showAlert();
 		} else {
 			this.props.onSubmit();
-			console.log(this.props);
 		}
+		
 	}
 
 	onValidate(key, value){
-		return this.props.validating && value === "" && this.value[key] ? <span className="help-block">This field is required</span> : " ";
+		return this.props.validating && this.value[key] && value === ""  ? <span className="help-block">This field is required</span> : " ";
+	}
+	
+	inputChanged(name, e) {
+//		e.preventDefault();
+		this.props.onChange(name, e);
 	}
 
 	render() {
-
+				
 		return (
-
 			<div className="myForm">
 				<AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
 				<div className="myForm-title"><h1>SPORTSETTER</h1></div>
 				<div className="formContainer">
-
-					<form onSubmit={this.onSubmit.bind(this)}>
-
-
-
-
-
-						<h4>First Name</h4>
-						<input
-							type="text"
-							placeholder="First Name"
-							className="Form-text-input"
+					
+					<form onSubmit={this.props.onSubmit.bind(this)}>
+						
+						<FormInput
+							name="firstName"
+							label="First Name"
 							value={this.props.firstName}
-							onChange={this.inputChanged.bind(this, "firstName")}
+							onChange={this.inputChanged.bind(this)}
 							onBlur={this.props.handleBlur}
-							onFocus={()=> this.value.firstName = true}/>
-
+							onFocus={()=> this.value.firstName = true}
+							/>
 						{this.onValidate("firstName", this.props.firstName)}
-
-						<h4>Last Name</h4>
-						<input
-							type="text"
-							placeholder="Last Name"
-							className="Form-text-input"
+						
+						<FormInput
+							name="lastName"
+							label="Last Name"
 							value={this.props.lastName}
-							onChange={this.inputChanged.bind(this, "lastName")}
+							onChange={this.inputChanged.bind(this)}
 							onBlur={this.props.handleBlur}
-							onFocus={()=> this.value.lastName = true}/>
-
+							onFocus={()=> this.value.lastName = true}
+							/>
 						{this.onValidate("lastName", this.props.lastName)}
-
-						<h4>Username</h4>
-						<input
-							type="text"
-							placeholder="Username"
-							className="Form-text-input"
+						
+						<FormInput
+							name="userName"
+							label="Username"
 							value={this.props.userName}
-							onChange={this.inputChanged.bind(this, "userName")}
+							onChange={this.inputChanged.bind(this)}
 							onBlur={this.props.handleBlur}
-							onFocus={()=> this.value.userName = true}/>
-
+							onFocus={()=> this.value.userName = true}
+							/>
 						{this.onValidate("userName", this.props.userName)}
-
-						<h4>Location</h4>
-						<input
-							type="text"
-							placeholder="Location"
-							className="Form-text-input"
+						
+						<FormInput
+							name="location"
+							label="Location"
 							value={this.props.location}
-							onChange={this.inputChanged.bind(this, "location")}
+							onChange={this.inputChanged.bind(this)}
 							onBlur={this.props.handleBlur}
-							onFocus={()=> this.value.location = true}/>
-
+							onFocus={()=> this.value.location = true}
+							/>
 						{this.onValidate("location", this.props.location)}
-
-						<a><button className="mybtn" type="submit" value="Submit">Submit</button></a>
+						
 					</form>
-
-				</div>
+					<button className="mybtn" type="submit" value="Submit" onClick={this.onSubmit.bind(this)}>Submit</button>
+			</div>
 			</div>
 		);
 	}
@@ -133,6 +124,7 @@ Form.propTypes = {
 	onChange: PropTypes.func.isRequired,
 	onSubmit: PropTypes.func.isRequired,
 	handleBlur: PropTypes.func,
+	getName: PropTypes.func,
 	validating: PropTypes.bool,
 };
 

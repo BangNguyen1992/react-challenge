@@ -1,32 +1,49 @@
-import React, { Component } from 'react';
-import Form from './Form';
+import React, { Component, PropTypes} from 'react';
+import './Form.css';
 
 class FormInput extends Component {
-
+		
+	inputChanged(name, e){
+//		e.preventDefault();
+		this.props.onChange(name, e.target.value);
+	}
+	
 	render() {
 		return (
-					<input type="text" className="Form-text-input" required/>
+			
+			<div className="FormInput">
+				<h4>{this.props.label}</h4>
+				
+				<input 
+					name={this.props.name}
+					type="text"
+					placeholder={this.props.label}
+					className="Form-text-input"
+					value={this.props.value}
+					onChange={this.inputChanged.bind(this, this.props.name)}
+					onBlur={this.props.onBlur}
+					onFocus={this.props.onFocus}
+					/>
+			</div>
+			 
 		);
 	}
-};
+}
 
 FormInput.propTypes = {
-	handleBlur: PropTypes.func,
-	firstName: PropTypes.string.isRequired,
-	lastName: PropTypes.string.isRequired,
-	userName: PropTypes.string.isRequired,
-	location: PropTypes.string.isRequired,
+	name: PropTypes.string.isRequired,
+	label: PropTypes.string.isRequired,
+	value: PropTypes.string.isRequired,
 	onChange: PropTypes.func.isRequired,
-	validating: PropTypes.bool,
+	onBlur: PropTypes.func.isRequired,
+	onFocus: PropTypes.func.isRequired,
+	
 };
+		
+
 export default FormInput;
 
-<label>
-	<span></span>
-	<input type="text" className="Form-text-input" required onBlur={this.props.handleBlur}
 
-		value={this.props.firstName}
-		onChange={this.inputChanged.bind(this, "firstName")}
-		onFocus={()=> this.value.firstName = true}
-		/>
-</label>
+
+
+
